@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kids Transport</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#DDF3FF;--ink:#2B2350;--red:#FF5A5F;--mint:#2EC4B6;--sun:#FFC93C;--grape:#7B5CFF;--green:#B8F0A8;--sky:#3BA0FF}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--ink);font-family:'Fredoka','Noto Sans Devanagari','Noto Sans Bengali','Trebuchet MS',system-ui,sans-serif;font-size:18px}
+.wrap{max-width:1000px;margin:0 auto;padding:24px 20px 48px}
+.top{display:grid;grid-template-columns:1fr minmax(240px,420px) 1fr;align-items:center;gap:16px;margin-bottom:20px}
+header{display:flex;align-items:center;gap:14px}
+.logo{width:56px;height:56px;border-radius:16px;background:var(--sky);border:3px solid var(--ink);box-shadow:0 4px 0 var(--ink);display:grid;place-items:center;flex:none}
+.logo i{border-style:solid;border-width:11px 0 11px 18px;border-color:transparent transparent transparent #fff;margin-left:5px}
+h1{margin:0;font-size:clamp(30px,6vw,46px);font-weight:600;line-height:1}
+.tag{margin:4px 0 0;font-size:17px;opacity:.8}
+.search{display:flex;align-items:center;gap:10px;background:#fff;border:3px solid var(--ink);border-radius:999px;box-shadow:0 4px 0 var(--ink);padding:0 16px;height:52px}
+.search:focus-within{outline:3px solid var(--grape);outline-offset:3px}
+.search svg{width:22px;height:22px;flex:none}
+.search input{flex:1;min-width:0;border:0;outline:0;background:transparent;font:inherit;color:var(--ink)}
+.langs{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin-bottom:16px}.langs:last-of-type{margin-bottom:34px}.card small{display:block;margin:4px 4px 0;font-size:15px;opacity:.7}
+.chip{font:inherit;font-weight:600;padding:9px 22px;border-radius:999px;border:3px solid var(--ink);background:#fff;color:var(--ink);box-shadow:0 4px 0 var(--ink);cursor:pointer;transition:transform .1s,box-shadow .1s}
+.chip:hover{background:#F3FFEF}
+.chip[aria-pressed="true"]{background:var(--green)}
+.chip:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
+.chip:disabled{opacity:.35;cursor:not-allowed}.chip small{font-size:.8em;opacity:.7;margin-left:4px}.status{text-align:center;margin:-10px 0 22px;font-weight:500;opacity:.85}
+.chip:focus-visible{outline:3px solid var(--grape);outline-offset:3px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:26px}
+.empty{grid-column:1/-1;text-align:center;padding:40px 10px;font-size:20px;opacity:.85}
+.card{display:block;text-decoration:none;color:inherit;outline:none}
+.thumb{position:relative;aspect-ratio:16/9;border-radius:20px;border:3px solid var(--ink);background:var(--c);box-shadow:0 6px 0 var(--ink);overflow:hidden;transition:transform .15s,box-shadow .15s}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.play{position:absolute;right:10px;bottom:10px;width:44px;height:44px;border-radius:50%;background:#fff;border:3px solid var(--ink);display:grid;place-items:center}
+.play::after{content:"";border-style:solid;border-width:8px 0 8px 13px;border-color:transparent transparent transparent var(--ink);margin-left:3px}
+.card p{margin:16px 4px 0;font-weight:500;font-size:20px}
+.card:hover .thumb,.card:focus-visible .thumb{transform:translateY(-4px);box-shadow:0 10px 0 var(--ink)}
+.card:focus-visible p{text-decoration:underline}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:999px;background:var(--sun);color:var(--ink);border:3px solid var(--ink);box-shadow:0 5px 0 var(--ink);font:inherit;font-weight:600;text-decoration:none;cursor:pointer;transition:transform .1s,box-shadow .1s}
+.btn:hover{background:#FFD65E}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 var(--ink)}
+.btn:focus-visible{outline:3px solid var(--grape);outline-offset:3px}
+.bar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:26px}
+.bar h2{margin:0;font-size:clamp(24px,5vw,34px);font-weight:600}
+.stage{max-width:900px}
+video{display:block;width:100%;background:#000;border-radius:22px;border:4px solid var(--ink);box-shadow:0 8px 0 var(--ink)}
+.more{margin:44px 0 18px;font-size:24px;font-weight:600}
+.back{margin:0 0 20px}
+[hidden]{display:none!important}
+@media (max-width:760px){.top{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){.thumb,.btn,.chip{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <main id="home">
+    <p class="back"><a class="btn" href="https://subhankarsarkar.github.io/kidsworld/">&larr; Kids World</a></p>
+    <div class="top">
+      <header>
+        <div class="logo" aria-hidden="true"><i></i></div>
+        <div><h1>Kids Transport</h1><p class="tag">Pick a clip and press play.</p></div>
+      </header>
+      <label class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg>
+        <input type="search" id="q" placeholder="Search transport, e.g. scooter, bus" aria-label="Search" autocomplete="off">
+      </label>
+      <span aria-hidden="true"></span>
+    </div>
+    <div id="filters"></div>
+    <p class="status" id="status" aria-live="polite"></p>
+    <div class="grid" id="grid"></div>
+  </main>
+  <main id="watch" hidden>
+    <div class="bar"><a class="btn" href="#">&larr; Back to Home</a><h2 id="now"></h2></div>
+    <div class="stage"><video id="video" controls playsinline></video></div>
+    <h3 class="more" id="moreTitle">More clips</h3>
+    <div class="grid" id="moreGrid"></div>
+    <p style="margin-top:36px"><a class="btn" href="#">&larr; Back to Home</a></p>
+  </main>
+</div>
+<script>
+  // Filter rows shown as buttons. The FIRST row also decides "More clips".
+  // Values must match the words used in the clips list below.
+  const GROUPS = [{"key": "category", "label": "Topics", "values": ["Transport"]}];
+
+  // To add a clip, add one line at the END of this list (keep the old order).
+  // Clip number N uses thumbs/N.jpg (or .png / .jpeg) and videos/N.mp4.
+  // tags = extra words that people may search for.
+  const clips = [
+    {"title": "Kids Transport – Ride, Roll, Scoot, Explore", "category": "Transport", "tags": "transport scooter bike ride helmet road wheels park safety vehicle", "thumb": "thumbs/1.jpg", "file": "videos/1.mp4"},
+    {"title": "Kids Transport – Ride, Roll, Scoot, Explore", "category": "Transport", "tags": "transport scooter bike ride helmet road wheels park safety vehicle", "thumb": "thumbs/2.jpg", "file": "videos/2.mp4"}
+  ];
+
+  const colors = ["var(--red)", "var(--mint)", "var(--sun)", "var(--grape)"];
+  const $ = id => document.getElementById(id);
+  const sel = {};
+  GROUPS.forEach(g => sel[g.key] = "");
+  let query = "";
+
+  function sub(c) { return GROUPS.slice(1).map(g => c[g.key]).join(" | "); }
+
+  function makeCard(clip, i) {
+    const a = document.createElement("a");
+    a.className = "card";
+    a.href = "#clip-" + i;
+    a.style.setProperty("--c", colors[i % colors.length]);
+    a.innerHTML = '<div class="thumb"><img src="' + clip.thumb + '" alt="" loading="lazy"><span class="play" aria-hidden="true"></span></div><p></p><small></small>';
+    a.querySelector("p").textContent = clip.title;
+    a.querySelector("small").textContent = sub(clip);
+    const img = a.querySelector("img");
+    const tries = ["jpg", "png", "jpeg", "webp"].map(x => clip.thumb.replace(/\.\w+$/, "." + x)).filter(u => u !== clip.thumb);
+    img.onerror = () => { const next = tries.shift(); next ? img.src = next : img.remove(); };
+    return a;
+  }
+
+  function buildChips() {
+    const box = $("filters");
+    GROUPS.forEach(g => {
+      const row = document.createElement("div");
+      row.className = "langs";
+      row.setAttribute("role", "group");
+      row.setAttribute("aria-label", g.label);
+      ["", ...g.values].forEach(v => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "chip";
+        b.dataset.k = g.key;
+        b.dataset.v = v;
+        b.textContent = v || "All " + g.label;
+        b.onclick = () => {
+          if (g === GROUPS[0]) GROUPS.forEach(o => sel[o.key] = "");
+          sel[g.key] = v; renderHome();
+        };
+        row.appendChild(b);
+      });
+      box.appendChild(row);
+    });
+    syncChips();
+  }
+
+  function matches(c, skip, val) {
+    const words = query.split(/\s+/).filter(Boolean);
+    const text = (c.title + " " + c.tags + " " + GROUPS.map(g => c[g.key]).join(" ")).toLowerCase();
+    return GROUPS.every(g => {
+      const want = g.key === skip ? val : sel[g.key];
+      return !want || c[g.key] === want;
+    }) && words.every(w => text.includes(w));
+  }
+
+  function syncChips() {
+    document.querySelectorAll(".chip").forEach(b => {
+      const k = b.dataset.k, v = b.dataset.v;
+      const n = clips.filter(c => matches(c, k, v)).length;
+      const on = sel[k] === v;
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+      b.disabled = n === 0 && !on;
+      b.innerHTML = (v || "All " + GROUPS.find(g => g.key === k).label) + " <small>" + n + "</small>";
+    });
+  }
+
+  function renderHome() {
+    const grid = $("grid");
+    grid.innerHTML = "";
+    const shown = clips.map((c, i) => ({ c, i })).filter(x => matches(x.c));
+    syncChips();
+    const on = GROUPS.map(g => sel[g.key]).filter(Boolean);
+    $("status").textContent = shown.length + (shown.length === 1 ? " clip" : " clips") + (on.length ? " for " + on.join(" + ") : "");
+    if (shown.length === 0) {
+      const p = document.createElement("p");
+      p.className = "empty";
+      p.textContent = "Nothing found. Try fewer words or tap All.";
+      grid.appendChild(p);
+      return;
+    }
+    shown.forEach(x => grid.appendChild(makeCard(x.c, x.i)));
+  }
+
+  function route() {
+    const m = location.hash.match(/^#clip-(\d+)$/);
+    const i = m ? Number(m[1]) : -1;
+    const v = $("video");
+    if (clips[i]) {
+      $("home").hidden = true;
+      $("watch").hidden = false;
+      $("now").textContent = clips[i].title;
+      v.src = clips[i].file;
+      v.play().catch(() => {});
+      const k = GROUPS[0].key, more = $("moreGrid");
+      more.innerHTML = "";
+      clips.forEach((c, j) => { if (j !== i && c[k] === clips[i][k]) more.appendChild(makeCard(c, j)); });
+      $("moreTitle").hidden = more.children.length === 0;
+    } else {
+      v.pause(); v.removeAttribute("src"); v.load();
+      $("watch").hidden = true;
+      $("home").hidden = false;
+    }
+    window.scrollTo(0, 0);
+  }
+
+  $("q").addEventListener("input", e => { query = e.target.value.trim().toLowerCase(); renderHome(); });
+  buildChips();
+  renderHome();
+  window.addEventListener("hashchange", route);
+  route();
+</script>
+</body>
+</html>
